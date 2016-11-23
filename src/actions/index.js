@@ -1,8 +1,13 @@
-export const SET_GLOBAL_STATE_VAR = "SET_GLOBAL_STATE_VAR";
+import axios from 'axios';
 
-export function setGlobalStateVar(params) {
+export const GET_PROGRAMMES = "GET_PROGRAMMES";
+
+const BASE_URI = "https://ibl.api.bbci.co.uk"
+
+export function getProgrammes(letter, page) {
+  const request = axios.get(`${BASE_URI}/ibl/v1/atoz/${letter}/programmes?page=${page}`);
   return {
-    type: SET_GLOBAL_STATE_VAR,
-    payload: params
+    type: GET_PROGRAMMES,
+    payload: request
   };
 }

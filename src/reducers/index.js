@@ -1,8 +1,3 @@
-import { combineReducers } from 'redux';
-import MyGlobalStateReducer from './reducer_global';
+import ProgrammesReducer from './reducer_programmes';
 
-const rootReducer = combineReducers({
-  myGlobalStateVar: MyGlobalStateReducer
-});
-
-export default rootReducer;
+export default ProgrammesReducer;
