@@ -34,4 +34,29 @@ describe('(Component) ProgrammeList', function() {
 
   });
 
+  describe("rendering programmes", function() {
+
+    it("renders programmes in given global state", function() {
+      let programmes = [
+        {
+          id: "1",
+          title: "Eastenders",
+          images: {
+            standard: "http://ichef.bbci.co.uk/images/ic/{recipe}/p017mqg6.jpg"
+          }
+        },
+        {
+          id: "2",
+          title: "Another Programme",
+          images: {
+            standard: "http://ichef.bbci.co.uk/images/ic/{recipe}/p017mqg6.jpg"
+          }
+        },
+      ];
+      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "A"}}, { programmes: programmes });
+      expect(rootComponent.find(".programme").length).to.eql(2);
+    });
+
+  });
+
 });
