@@ -18,7 +18,7 @@ hook({
   preprocessCss: data => sass.renderSync({ data }).css
 })
 
-global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
+global.document = jsdom.jsdom('<!doctype html><html><body></body></html>', { url: 'http://localhost' });
 global.window = global.document.defaultView;
 global.navigator = global.window.navigator;
 const $ = _$(window);

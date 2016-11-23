@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --compilers js:babel-register --require ./test/test_helper.js --recursive",
     "test:watch": "npm test -- --watch",
-    "start": "webpack-dev-server --progress --colors --hot"
+    "start": "webpack-dev-server --progress --colors --hot --history-api-fallback"
   },
   "repository": {
     "type": "git",
