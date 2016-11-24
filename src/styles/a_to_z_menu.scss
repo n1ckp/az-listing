@@ -1,0 +1,10 @@
+@import 'theme';
+
+.atoz-menu {
+  text-align: center;
+  background-color: lighten($theme-background, 10%);
+  .menu-link {
+    width: 26px;
+    display: inline-block;
+  }
+}
