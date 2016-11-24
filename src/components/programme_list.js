@@ -8,31 +8,29 @@ import ProgrammeListItem from './programme_list_item';
 require('../styles/programme_list.scss');
 
 class ProgrammeList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { current_page: 1 };
-  }
-
   componentDidMount() {
     if (this.props.params) {
-      if (!this.validLetter()) {
+      if (!this.validLetter(this.props.params.letter)) {
         // Redirect if no valid letter param is given
         browserHistory.push("/not_found");
         return;
       }
-      this.fetchProgrammes(this.state.current_page);
+      if (this.props.params.letter != this.props.page_letter) {
+        browserHistory.push(`/a-z/${this.props.page_letter}`);
+      }
     }
+    this.fetchProgrammes(this.props.page_number);
   }
 
   fetchProgrammes(page) {
-    this.props.getProgrammes(this.props.params.letter.toLowerCase(), page);
+    this.props.getProgrammes(this.props.page_letter.toLowerCase(), page);
   }
 
-  validLetter() {
-    if (this.props.params.letter.length === 3) {
-      return this.props.params.letter.match(/^(0\-9)$/);
-    } else if (this.props.params.letter.length === 1) {
-      return this.props.params.letter.match(/^[A-Z]|[a-z]$/);
+  validLetter(letter) {
+    if (letter.length === 3) {
+      return letter.match(/^(0\-9)$/);
+    } else if (letter.length === 1) {
+      return letter.match(/^[A-Z]|[a-z]$/);
     } else {
       return false;
     }
@@ -46,31 +44,30 @@ class ProgrammeList extends Component {
   }
 
   goToPrevPage() {
-    const prev_page = this.state.current_page - 1;
-    this.setState({current_page: prev_page});
-    this.fetchProgrammes(prev_page);
+    this.props.getProgrammes(this.props.page_letter, this.props.page_number - 1);
   }
 
   goToNextPage() {
-    const next_page = this.state.current_page + 1;
-    this.setState({current_page: next_page});
-    this.fetchProgrammes(next_page);
+    this.props.getProgrammes(this.props.page_letter, this.props.page_number + 1);
+  }
+
+  hasMorePages() {
+    return this.props.total_count > this.props.page_number*this.props.per_page;
   }
 
   renderPagination() {
-    if(!this.props.more_pages == undefined) { return null; }
     return (
       <div className="pagination row">
         <div className="row">
           <div className="small-2 columns">
-            {(this.state.current_page > 1) ? <a className="prev-page" onClick={() => this.goToPrevPage()}>Prev Page</a> : null}
+            {(this.props.page_number > 1) ? <a className="prev-page" onClick={() => this.goToPrevPage()}>Prev Page</a> : null}
           </div>
 
           <div className="small-2 columns">
-            {(this.props.more_pages) ? <a className="next-page" onClick={() => this.goToNextPage() }>Next Page</a> : null}
+            {(this.hasMorePages()) ? <a className="next-page" onClick={() => this.goToNextPage() }>Next Page</a> : null}
           </div>
         </div>
-        <div className="current-page row">Page {this.state.current_page}</div>
+        <div className="current-page row">Page {this.props.page_number}</div>
       </div>
     );
   }
@@ -78,7 +75,7 @@ class ProgrammeList extends Component {
   render() {
     return (
       <div>
-        <h1>Programme Listing for {this.props.params ? this.props.params.letter.toUpperCase() : ""}</h1>
+        <h1>Programme Listing for {this.props.page_letter.toUpperCase()}</h1>
         { this.renderPagination() }
         { this.renderList() }
         { this.renderPagination() }
@@ -90,7 +87,10 @@ class ProgrammeList extends Component {
 const mapStateToProps = (state) => {
   return {
     programmes: state.programmes,
-    more_pages: state.more_pages
+    page_letter: state.page_letter,
+    page_number: state.page_number,
+    total_count: state.count,
+    per_page: state.per_page
   }
 }
 
