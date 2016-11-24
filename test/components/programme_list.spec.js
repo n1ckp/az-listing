@@ -72,12 +72,13 @@ describe('(Component) ProgrammeList', function() {
     });
 
     it("doesn't show a 'prev page' button if current page == 1", function() {
-      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "A"}, page: 1});
+      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "A"}});
       expect(rootComponent.find(".prev-page").length).to.eql(0);
     });
 
     it("shows a 'previous page' button if current page > 1", function() {
-      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "A"}, page: 2});
+      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "A"}}, {more_pages: true});
+      rootComponent.find('.next-page').simulate("click");
       expect(rootComponent.find(".prev-page").length).to.eql(1);
     });
 

@@ -8,6 +8,10 @@ h1,h3 {
   color: $theme-secondary;
   text-align: center;
 }
+a {
+  color: $theme-secondary !important;
+  text-align: center;
+}
 .main-container {
   max-width: 800px;
   margin: 0 auto;
