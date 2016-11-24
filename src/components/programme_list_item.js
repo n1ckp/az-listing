@@ -32,6 +32,7 @@ export default class ProgrammeListItem extends Component {
         </div>
         <div className="small-8 columns">
           <p className="title">{ this.props.programme.title }</p>
+          <p className="synopsis">{ this.props.programme.synopses.small }</p>
         </div>
       </div>
     );

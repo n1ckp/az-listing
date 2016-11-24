@@ -10,6 +10,9 @@ describe('(Component) ProgrammeListItem', function() {
       title: "Eastenders",
       images: {
         standard: "http://ichef.bbci.co.uk/images/ic/{recipe}/p017mqg6.jpg"
+      },
+      synopses: {
+        small: "Phil says 'Oi' for the last time.."
       }
     };
     rootComponent = renderComponent(ProgrammeListItem, { programme: programmeData, img_size: "large" });
@@ -24,6 +27,10 @@ describe('(Component) ProgrammeListItem', function() {
 
     it("displays the programme title", function() {
       expect(rootComponent.text()).to.include("Eastenders");
+    });
+
+    it("displays the programme's (small) synopsis", function() {
+      expect(rootComponent.text()).to.include("Phil says 'Oi' for the last time..");
     });
 
     it("displays the programme image", function() {
@@ -41,7 +48,5 @@ describe('(Component) ProgrammeListItem', function() {
     });
 
   });
-
-
 
 });

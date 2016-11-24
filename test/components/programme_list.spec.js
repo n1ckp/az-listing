@@ -38,6 +38,9 @@ describe('(Component) ProgrammeList', function() {
           title: "Eastenders",
           images: {
             standard: "http://ichef.bbci.co.uk/images/ic/{recipe}/p017mqg6.jpg"
+          },
+          synopses: {
+            small: "Phil says 'Oi' for the last time.."
           }
         },
         {
@@ -45,6 +48,9 @@ describe('(Component) ProgrammeList', function() {
           title: "Another Programme",
           images: {
             standard: "http://ichef.bbci.co.uk/images/ic/{recipe}/p017mqg6.jpg"
+          },
+          synopses: {
+            small: "This programme is just another programme"
           }
         },
       ];
