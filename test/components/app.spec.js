@@ -8,7 +8,11 @@ describe('(Component) App', function() {
     rootComponent = renderComponent(App);
   });
 
-  it('renders as a <div>', () => {
+  it('renders as a <div>', function() {
     expect(rootComponent.is("div")).to.eql(true);
+  });
+
+  it('renders the AToZMenu', function() {
+    expect(rootComponent.find(".atoz-menu").length).to.eql(1);
   });
 });
