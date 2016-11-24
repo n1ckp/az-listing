@@ -66,9 +66,9 @@ describe('(Component) ProgrammeList', function() {
       expect(rootComponent.find(".next-page").length).to.eql(0);
     });
 
-    it("shows a 'next page' button if 'more_pages' is true", function() {
+    it("shows 'next page' buttons if 'more_pages' is true", function() {
       let rootComponent = renderComponent(ProgrammeList, {params: {letter: "A"} }, { more_pages: true });
-      expect(rootComponent.find(".next-page").length).to.eql(1);
+      expect(rootComponent.find(".next-page").length).to.eql(2);
     });
 
     it("doesn't show a 'prev page' button if current page == 1", function() {
@@ -76,10 +76,10 @@ describe('(Component) ProgrammeList', function() {
       expect(rootComponent.find(".prev-page").length).to.eql(0);
     });
 
-    it("shows a 'previous page' button if current page > 1", function() {
+    it("shows 'previous page' buttons if current page > 1", function() {
       let rootComponent = renderComponent(ProgrammeList, {params: {letter: "A"}}, {more_pages: true});
       rootComponent.find('.next-page').simulate("click");
-      expect(rootComponent.find(".prev-page").length).to.eql(1);
+      expect(rootComponent.find(".prev-page").length).to.eql(2);
     });
 
   });
