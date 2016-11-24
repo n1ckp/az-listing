@@ -8,7 +8,6 @@ import sinon from 'sinon';
 import chaiJquery from 'chai-jquery';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import reducers from '../src/reducers';
 
 import hook from 'css-modules-require-hook'
 import sass from 'node-sass'
@@ -27,7 +26,7 @@ chaiJquery(chai, chai.util, $);
 
 export function renderComponent(ComponentClass, props = {}, state = {}) {
   const componentInstance =  TestUtils.renderIntoDocument(
-    <Provider store={createStore(reducers, state)}>
+    <Provider store={createStore((_state,actions) => {return _state}, state)}>
       <ComponentClass {...props} />
     </Provider>
   );

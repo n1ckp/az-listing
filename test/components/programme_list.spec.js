@@ -36,7 +36,7 @@ describe('(Component) ProgrammeList', function() {
 
   describe("rendering programmes", function() {
 
-    it("renders programmes in given global state", function() {
+    it("renders given programmes", function() {
       let programmes = [
         {
           id: "1",
@@ -53,8 +53,8 @@ describe('(Component) ProgrammeList', function() {
           }
         },
       ];
-      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "A"}}, { programmes: programmes });
-      expect(rootComponent.find(".programme").length).to.eql(2);
+      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "A"} }, { programmes: programmes });
+      expect(rootComponent.find(".programme-list-item").length).to.eql(2);
     });
 
   });
