@@ -4,31 +4,26 @@ import ProgrammeList from '../../src/components/programme_list';
 import { renderComponent } from '../test_helper';
 
 describe('(Component) ProgrammeList', function() {
+  let state;
+
+  beforeEach(function() {
+    state = { page_letter: "a", page_number: 1 };
+  });
 
   it('renders as a <div>', () => {
-    let rootComponent = renderComponent(ProgrammeList);
+    let rootComponent = renderComponent(ProgrammeList, {}, state);
     expect(rootComponent.is("div")).to.eql(true);
   });
 
   describe("url params", function() {
 
-    it("Doesn't redirect if a valid capital letter", function() {
-      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "A"}});
-      expect(window.location.pathname).to.eql("/");
-    });
-
-    it("Doesn't redirect if a valid lowercase letter", function() {
-      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "g"}});
-      expect(window.location.pathname).to.eql("/");
-    });
-
-    it("Doesn't redirect if '0-9'", function() {
-      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "0-9"}});
-      expect(window.location.pathname).to.eql("/");
+    it("redirects to global state page_letter if a different capital letter is passed as params", function() {
+      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "g"}}, state);
+      expect(window.location.pathname).to.eql("/a-z/a");
     });
 
     it("Redirects to 'not_found' if invalid letter param", function() {
-      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "abc"}});
+      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "abc"}}, state);
       expect(window.location.pathname).to.eql("/not_found");
     });
 
@@ -53,7 +48,8 @@ describe('(Component) ProgrammeList', function() {
           }
         },
       ];
-      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "A"} }, { programmes: programmes });
+      state.programmes = programmes;
+      let rootComponent = renderComponent(ProgrammeList, {}, state);
       expect(rootComponent.find(".programme-list-item").length).to.eql(2);
     });
 
@@ -61,24 +57,31 @@ describe('(Component) ProgrammeList', function() {
 
   describe("pagination", function() {
 
-    it("doesn't show a 'next page' button if 'more_pages' is false", function() {
-      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "A"} }, { more_pages: false });
+    it("doesn't show a 'next page' button if no more pages", function() {
+      state.count = 2;
+      state.page_number = 1;
+      state.per_page = 2;
+      let rootComponent = renderComponent(ProgrammeList, {}, state);
       expect(rootComponent.find(".next-page").length).to.eql(0);
     });
 
-    it("shows 'next page' buttons if 'more_pages' is true", function() {
-      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "A"} }, { more_pages: true });
+    it("shows 'next page' buttons if there are more pages", function() {
+      state.count = 4;
+      state.page_number = 1;
+      state.per_page = 2;
+      let rootComponent = renderComponent(ProgrammeList, {}, state);
       expect(rootComponent.find(".next-page").length).to.eql(2);
     });
 
     it("doesn't show a 'prev page' button if current page == 1", function() {
-      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "A"}});
+      state.page_number = 1;
+      let rootComponent = renderComponent(ProgrammeList, {}, state);
       expect(rootComponent.find(".prev-page").length).to.eql(0);
     });
 
     it("shows 'previous page' buttons if current page > 1", function() {
-      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "A"}}, {more_pages: true});
-      rootComponent.find('.next-page').simulate("click");
+      state.page_number = 2;
+      let rootComponent = renderComponent(ProgrammeList, {}, state);
       expect(rootComponent.find(".prev-page").length).to.eql(2);
     });
 
