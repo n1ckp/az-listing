@@ -59,4 +59,28 @@ describe('(Component) ProgrammeList', function() {
 
   });
 
+  describe("pagination", function() {
+
+    it("doesn't show a 'next page' button if 'more_pages' is false", function() {
+      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "A"} }, { more_pages: false });
+      expect(rootComponent.find(".next-page").length).to.eql(0);
+    });
+
+    it("shows a 'next page' button if 'more_pages' is true", function() {
+      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "A"} }, { more_pages: true });
+      expect(rootComponent.find(".next-page").length).to.eql(1);
+    });
+
+    it("doesn't show a 'prev page' button if current page == 1", function() {
+      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "A"}, page: 1});
+      expect(rootComponent.find(".prev-page").length).to.eql(0);
+    });
+
+    it("shows a 'previous page' button if current page > 1", function() {
+      let rootComponent = renderComponent(ProgrammeList, {params: {letter: "A"}, page: 2});
+      expect(rootComponent.find(".prev-page").length).to.eql(1);
+    });
+
+  });
+
 });
