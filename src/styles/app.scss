@@ -1,0 +1,14 @@
+@import 'theme';
+
+body {
+  background-color: $theme-background;
+  color: $theme-primary;
+}
+h1,h3 {
+  color: $theme-secondary;
+  text-align: center;
+}
+.main-container {
+  max-width: 800px;
+  margin: 0 auto;
+}

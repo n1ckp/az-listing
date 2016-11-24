@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+require('../styles/programme_list_item.scss');
 
 export default class ProgrammeListItem extends Component {
   renderImage() {
@@ -26,11 +27,11 @@ export default class ProgrammeListItem extends Component {
     if (!this.props.programme) {return null;}
     return (
       <div className="programme-list-item row">
-        <div className="small-4 columns">
+        <div className="small-4 columns img-container">
           {this.renderImage()}
         </div>
         <div className="small-8 columns">
-          <h3>{ this.props.programme.title }</h3>
+          <p className="title">{ this.props.programme.title }</p>
         </div>
       </div>
     );
