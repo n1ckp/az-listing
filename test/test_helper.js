@@ -14,7 +14,7 @@ import sass from 'node-sass'
 
 hook({
   extensions: [ '.scss' ],
-  preprocessCss: data => sass.renderSync({ data }).css
+  preprocessCss: (data, file) => sass.renderSync({ data, file }).css
 })
 
 global.document = jsdom.jsdom('<!doctype html><html><body></body></html>', { url: 'http://localhost' });
